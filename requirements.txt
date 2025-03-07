@@ -1,6 +1,9 @@
-streamlit
-pdfplumber
-pdf2image
-pytesseract
-Pillow
-python-docx
+streamlit==1.38.0
+pdfplumber==0.11.5
+pytesseract==0.3.10
+pdf2image==1.17.0
+Pillow==10.2.0
+pandas==1.5.3
+python-docx==0.8.11
+openai>=1.0.0
+numpy==1.26.4
