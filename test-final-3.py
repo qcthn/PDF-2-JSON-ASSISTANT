@@ -126,7 +126,7 @@ def create_word_file(text_list, output_path):
         return False
 
 # Ứng dụng Streamlit
-st.title("📄 PDF to JSON & AI Assistant")
+st.title("📄 PDF to JSON & HRIS AI Assistant")
 st.write("🔹 Upload your CV (PDF), extract content and ask questions to the virtual assistant!")
 
 uploaded_files = st.file_uploader("📤Select PDF file", type=["pdf"], accept_multiple_files=True)
