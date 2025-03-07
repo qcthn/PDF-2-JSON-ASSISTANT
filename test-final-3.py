@@ -8,9 +8,9 @@ from docx import Document
 import re
 
 # Nhập OpenAI API Key
-api_key = st.text_input("🔑 Nhập OpenAI API Key:", type="password")
+api_key = st.text_input("🔑 Enter OpenAI API Key:", type="password")
 if not api_key:
-    st.warning("Vui lòng nhập OpenAI API Key để sử dụng ứng dụng.")
+    st.warning("Please enter OpenAI API Key to use the app.")
     st.stop()
 
 # Cấu hình OpenAI client
@@ -122,14 +122,14 @@ def create_word_file(text_list, output_path):
         doc.save(output_path)
         return True
     except Exception as e:
-        st.error(f"Lỗi khi tạo file Word: {e}")
+        st.error(f"Error creating Word file: {e}")
         return False
 
 # Ứng dụng Streamlit
 st.title("📄 PDF to JSON & AI Assistant")
-st.write("🔹 Tải lên CV (PDF), trích xuất nội dung và đặt câu hỏi với trợ lý ảo!")
+st.write("🔹 Upload your CV (PDF), extract content and ask questions to the virtual assistant!")
 
-uploaded_files = st.file_uploader("📤 Chọn file PDF", type=["pdf"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("📤Select PDF file", type=["pdf"], accept_multiple_files=True)
 temp_dir = "temp"
 os.makedirs(temp_dir, exist_ok=True)
 
@@ -159,13 +159,13 @@ if uploaded_files:
     json_output = os.path.join(temp_dir, "extracted_data.json")
     save_to_json(list(extracted_data.values()), json_output)
     with open(json_output, "rb") as file:
-        st.download_button("📥 Tải file JSON", file, file_name="extracted_data.json")
+        st.download_button("📥 Download file JSON", file, file_name="extracted_data.json")
 
     # Chatbot với trợ lý ảo
-    st.subheader("💬 Chat với trợ lý ảo về nội dung CV")
+    st.subheader("💬 Chat with virtual assistant about CV content")
 
     if len(uploaded_files) > 1:
-        selected_cv = st.selectbox("Chọn CV để tương tác:", list(extracted_texts.keys()))
+        selected_cv = st.selectbox("Select CV to interact:", list(extracted_texts.keys()))
     else:
         selected_cv = list(extracted_texts.keys())[0]
     if "openai_model" not in st.session_state:
@@ -178,8 +178,8 @@ if uploaded_files:
             st.markdown(message["content"])
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
-    text_CV = f"Dưới đây là nội dung CV của ứng viên:\n{extracted_texts[selected_cv]}"
-    prompt = st.chat_input("Hỏi trợ lý ảo về CV này:")
+    text_CV = f"Below is the content of the candidate's CV:\n{extracted_texts[selected_cv]}"
+    prompt = st.chat_input("Ask a virtual assistant about this resume:")
     if prompt:
          # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
